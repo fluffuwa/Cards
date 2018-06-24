@@ -14,7 +14,9 @@ import fluffuwa.card.Touchable;
 
 public abstract class Enemy {
 
-    public ArrayList<Card> decklist = new ArrayList ();
+    public ArrayList<Card> deck = new ArrayList ();
+    public ArrayList <Card> played = new ArrayList();
+    public ArrayList <Card> hand = new ArrayList();
 
     public String name;
 
@@ -48,8 +50,23 @@ public abstract class Enemy {
         enemies = new Enemy []{new Slimey (), new Player()};
     }
 
+    public boolean isPlayer (){
+        return name.equals ("player");
+    }
+
     public void onDraw (Canvas c){
-        c.drawBitmap (i, (int)(curX - width/2.0), (int)(curY - width/2.0), p);
+        double tempX = curX;
+        double tempY = curY;
+        if (!isPlayer())
+            tempY = h - curY;
+        c.drawBitmap (i, (int)(tempX - width/2.0), (int)(tempY - width/2.0), p);
+
+
+    }
+
+    public void drawCard (){
+        if (deck.size() > 0)
+            hand.add(deck.remove((int) (Math.random() * deck.size())).addToHand());
     }
 
     static GameStateController gsc;

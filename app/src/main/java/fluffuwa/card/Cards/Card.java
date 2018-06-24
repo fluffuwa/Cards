@@ -134,10 +134,6 @@ public abstract class Card {
                     handPosition = (correctPosition - handPosition) / speed + handPosition;
                     curX = (int) (Math.cos(handPosition) * w / 3.0 + w / 2.0);
                     curY = (int) (-Math.sin(handPosition) * w / 3.0 - w / 12.0 + h);
-                    if (!playerCard) {
-                        curY = h - curY;
-                        curX = w - curX;
-                    }
                     preferredX = curX;
                     preferredY = curY;
                     break;
@@ -145,17 +141,15 @@ public abstract class Card {
                 case 'L':
                     int y = Integer.parseInt(targetLocation.split(",")[1]);
                     preferredX = cardWidth * y + y * w / 36.0 + cardWidth / 2.0 + w / 36.0;
-                    if (!playerCard)
-                        preferredX = w - preferredX;
                     preferredY = h / 2.0 + w / 36.0 + cardWidth / 2.0;
-                    if (!playerCard)
-                        preferredY = h - preferredY;
                     break;
                 default:
                     preferredX = Double.parseDouble(targetLocation.split(",")[0]);
                     preferredY = Double.parseDouble(targetLocation.split(",")[1]);
                     break;
             }
+            if (!playerCard)
+                preferredY = h - preferredY;
 
             curX = (preferredX - curX) / speed + curX;
             curY = (preferredY - curY) / speed + curY;
